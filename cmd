@@ -3,8 +3,8 @@
 if [ "$#" -gt 0 ]; then
     # Inicialização do container
     if [ $1 = "run" ]; then
+        echo 'Inicializando container...'
         docker-compose up
-        echo 'Container inicializado'
     fi
     # Abrir terminal em modo interativo
     if [ $1 = "bash" ]; then
@@ -13,7 +13,7 @@ if [ "$#" -gt 0 ]; then
         docker exec -it pg_container /bin/bash
     fi
     # Povoar servidor postgres com os arquivos tabela.sql e inserts.sql
-   if [ $1 = "pop" ]; then
+    if [ $1 = "pop" ]; then
         echo 'Populando servidor...'
         docker exec -it pg_container /bin/bash -c \
         "cd files/ && \
@@ -36,4 +36,8 @@ if [ "$#" -gt 0 ]; then
         psql -U root -d test_db -f ./inserts.sql"
         echo 'Tabelas restauradas'
     fi    
+    if [ $1 = "stop" ]; then
+        echo 'Finalizando execução...'
+        docker-compose stop
+    fi
 fi

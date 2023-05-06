@@ -35,6 +35,11 @@
 ```
 <p>Ele verifica se o servidor foi criado e se o schema do test_tb existe, caso sim, remove todas as tabelas e realiza novamente a inserção e povoamento dos dados, restaurando assim todas as informações para o estado original.</p>
 
+<h3>Imterrompendo execução</h3>
+<p>Existem duas formas de parar a execução do container, apertando CTRL+C no terminal aonde ele foi inicializado, ou caso queira, você pode digitar o seguinte comando:</p>
 
+```
+./cmd stop
+```
 
 
