@@ -16,26 +16,24 @@ if [ "$#" -gt 0 ]; then
     if [ $1 = "pop" ]; then
         echo 'Populando servidor...'
         docker exec -it pg_container /bin/bash -c \
-        "cd files/ && \
-        psql -U root -d test_db -f ./tabelas.sql && \
-        psql -U root -d test_db -f ./inserts.sql"
+            "cd files/ && \
+        psql -U root -d pokedata -f ./init-script.sql"
         echo "Dados inseridos com sucesso."
     fi
     # Restaurando tabelas para o estado original
     if [ $1 = "reset" ]; then
         echo 'Removendo tabelas do servidor...'
         docker exec -it pg_container /bin/bash -c \
-        "psql -U root -d test_db -c \
+            "psql -U root -d pokedata -c \
         \"DROP SCHEMA IF EXISTS public CASCADE; \
         CREATE SCHEMA IF NOT EXISTS public;\""
 
         echo 'Adicionando novamente...'
         docker exec -it pg_container /bin/bash -c \
-        "cd files/ && \
-        psql -U root -d test_db -f ./tabelas.sql && \
-        psql -U root -d test_db -f ./inserts.sql"
+            "cd files/ && \
+        psql -U root -d pokedata -f ./init-script.sql"
         echo 'Tabelas restauradas'
-    fi    
+    fi
     if [ $1 = "stop" ]; then
         echo 'Finalizando execução...'
         docker-compose stop
